@@ -12,12 +12,15 @@ fromBtn.addEventListener("click",()=>{
     }
 })
 
+
+// for displaying the output with correct state
 function setOutputState(state, message) {
     output.classList.remove(...OUTPUT_STATES)
     output.classList.add(state)
     output.innerText = message
 }
 
+//function to convert binary to decimal
 function BintoDec(input){
     
 
@@ -59,6 +62,7 @@ function BintoDec(input){
 }
 
 
+//function to convert Decimal to Binary
 function DectoBin(inputData) {
 
     let inputValue = Number(inputData);
@@ -80,7 +84,7 @@ function DectoBin(inputData) {
 
 
 
-
+// function triggers the convert button
 function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
     let inputFrom = fromBtn.value
