@@ -1,14 +1,24 @@
-# Bin2Dec
+# BaseBridge Converter
 
-A simple JavaScript project that converts an 8-bit binary input to its decimal value.
+A lightweight browser-based number base converter built with plain HTML, CSS, and JavaScript.
+
+## Current Support
+
+- Binary to Decimal
+- Decimal to Binary
+
+## Planned Support
+
+- Hexadecimal conversion
+- Octal conversion
 
 ## Features
 
-- Converts binary to decimal in the browser.
-- Accepts up to 8 digits.
-- Validates input and shows clear error messages.
-- Color-coded output states (success/error/neutral).
-- Clean responsive UI with subtle animations.
+- Convert using **From** and **To** base selectors.
+- Input limit up to 16 characters.
+- Inline validation and clear error messages.
+- Status-based output styling (success, error, neutral).
+- Responsive UI optimized for desktop and mobile.
 
 ## Project Structure
 
@@ -24,18 +34,32 @@ Bin2Dec/
 ## How to Run
 
 1. Open the project folder.
-2. Open `src/index.html` in your browser.
+2. Open `src/index.html` in any modern browser.
 
-No build tools or dependencies are required.
+No dependencies or build tools are required.
 
-## Usage
+## How to Use
 
-1. Enter a binary number (for example: `10101101`).
-2. Click **Convert**.
-3. See the decimal result in the output area.
+1. Enter a value in the input field.
+2. Choose the source base from the first dropdown.
+3. Choose the target base from the second dropdown.
+4. Click **Convert**.
 
-## Validation Rules
+## Validation Notes
 
-- Input cannot be empty.
-- Maximum length is 8 digits.
-- Only `0` and `1` are allowed.
+### Binary input
+
+- Cannot be empty.
+- Must contain only `0` and `1`.
+- Maximum length is 16 digits.
+
+### Decimal input
+
+- Decimal-to-binary conversion is available.
+- Additional strict validation for invalid decimal formats can be improved in future updates.
+
+## Tech Stack
+
+- HTML5
+- CSS3
+- Vanilla JavaScript (ES6)
