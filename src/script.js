@@ -90,6 +90,16 @@ function handleConvert(){
     let inputFrom = fromBtn.value
     let inputTo = toBtn.value;
 
+    if (inputValue === ""){
+        setOutputState("output--error", "Input field is empty.");
+        return;
+    }
+
+    if (inputValue.length > 16){
+        setOutputState("output--error", "Max 16 digits.");
+        return;
+    }
+
     if (inputFrom == "Bin" && inputTo == "Dec"){
         BintoDec(inputValue);
     }
