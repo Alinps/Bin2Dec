@@ -5,11 +5,21 @@ let toBtn = document.getElementById("inputTo")
 const OUTPUT_STATES = ["output--success", "output--error", "output--neutral"]
 
 fromBtn.addEventListener("click",()=>{
-    if (fromBtn.value == "Bin"){
-        document.getElementById("forminput").placeholder = "e.g. 10101101"
-    } else {
-         document.getElementById("forminput").placeholder = "Enter decimal number"
+
+    let BtnValue = fromBtn.value;
+
+    switch (BtnValue) {
+        case "Bin":
+            document.getElementById("forminput").placeholder = "Enter Binary";
+            break;
+        case "Dec":
+            document.getElementById("forminput").placeholder = "Enter Decimal number";
+            break;
+        case "Hex":
+            document.getElementById("forminput").placeholder = "Enter Hexadecimal number"
+            break;
     }
+
 })
 
 
@@ -86,10 +96,12 @@ function DectoBin(inputData) {
 function DectoHex(inputData){
 
     let base16Value = Number(inputData);
+
     if (isNaN(base16Value)){
         setOutputState("output--error", `Please enter a valid decimal number.`)
         return
     }
+
     let base16 = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"]
     let quotient = base16Value;
     let reminder = [];
@@ -116,13 +128,57 @@ function DectoHex(inputData){
 
 
 
+function HextoBin(inputData) {
+    let HexValue = inputData.toUpperCase();
+
+    if (HexValue.length > 4) {
+        setOutputState("output--error", `Enter upto 16 bit Hexadecimal Number`);
+        return;
+    }
+
+    let HexBinBase  = {
+        "0":"0000",
+        "1":"0001",
+        "2":"0010",
+        "3":"0011",
+        "4":"0100",
+        "5":"0101",
+        "6":"0110",
+        "7":"0111",
+        "8":"1000",
+        "9":"1001",
+        "A":"1010",
+        "B":"1011",
+        "C":"1100",
+        "D":"1101",
+        "E":"1110",
+        "F":"1111"
+    }
+     let HexArray = HexValue.split("")
+
+     for (let value of HexArray) {
+
+        let keys = Object.keys(HexBinBase)
+
+        if(!keys.includes(value)) {
+          setOutputState("output--error",`Please enter valid Hexadecimal`)
+          return;
+        }
+
+     }
+     let BinArray = HexArray.map((value) => HexBinBase[value]);
+
+     let result = BinArray.join("");
+     setOutputState("output--success",`Binary Value: ${result}`)
+}
+
+
 
 // function triggers the convert button
 function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
     let inputFrom = fromBtn.value
     let inputTo = toBtn.value;
-    DectoHex();
 
     if (inputValue === ""){
         setOutputState("output--error", "Input field is empty.");
@@ -142,6 +198,9 @@ function handleConvert(){
     }
     else if (inputFrom == "Dec" && inputTo == "Hex"){
         DectoHex(inputValue);
+    }
+    else if (inputFrom == "Hex" && inputTo == "Bin"){
+        HextoBin(inputValue);
     }
     
     else {
