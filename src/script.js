@@ -82,6 +82,39 @@ function DectoBin(inputData) {
     }
 
 
+// function to convert Decimal to Hexadecimal
+function DectoHex(inputData){
+
+    let base16Value = Number(inputData);
+    if (isNaN(base16Value)){
+        setOutputState("output--error", `Please enter a valid decimal number.`)
+        return
+    }
+    let base16 = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"]
+    let quotient = base16Value;
+    let reminder = [];
+    reminder.push(quotient % 16)
+
+    while (quotient > 0){
+         
+        quotient = Math.floor(quotient/16)
+        if (quotient < 16) {
+
+            if( quotient === 0){
+                break;
+            }
+            reminder.push(quotient)
+        }else{
+            reminder.push(quotient % 16);
+        }
+    }
+   let reversedReminder = reminder.reverse();
+   let HexArray = reversedReminder.map((value) => base16[value]);
+   let result ="0x" + HexArray.join("");
+   setOutputState("output--success", `Hexadecimal Value: ${result}`);  
+}
+
+
 
 
 // function triggers the convert button
@@ -89,6 +122,7 @@ function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
     let inputFrom = fromBtn.value
     let inputTo = toBtn.value;
+    DectoHex();
 
     if (inputValue === ""){
         setOutputState("output--error", "Input field is empty.");
@@ -105,7 +139,12 @@ function handleConvert(){
     }
     else if (inputFrom == "Dec" && inputTo == "Bin") {
         DectoBin(inputValue);
-    }else {
+    }
+    else if (inputFrom == "Dec" && inputTo == "Hex"){
+        DectoHex(inputValue);
+    }
+    
+    else {
          setOutputState("output--error", `Please choose valid options to convert.`)
 
     }
