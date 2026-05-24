@@ -127,7 +127,7 @@ function DectoHex(inputData){
 }
 
 
-
+// function to convert Hexadecimal number to Binary number
 function HextoBin(inputData) {
     let HexValue = inputData.toUpperCase();
 
@@ -174,6 +174,57 @@ function HextoBin(inputData) {
 
 
 
+// function to convert Hexadecimal number to Decimal number.
+function HextoDec(inputData){
+    let hexDecBase = {
+        "0":0,
+        "1":1,
+        "2":2,
+        "3":3,
+        "4":4,
+        "5":5,
+        "6":6,
+        "7":7,
+        "8":8,
+        "9":9,
+        "A":10,
+        "B":11,
+        "C":12,
+        "D":13,
+        "E":14,
+        "F":15
+        }
+
+    let hexValue = inputData.toUpperCase();
+    let hexArray = hexValue.split("");
+    let arrayLength = hexArray.length;
+
+    if (arrayLength > 4){
+        setOutputState("output--error", "Enter upto 16 bit Hexadecimal Number.");
+        return;
+    }
+
+    for (let value of hexArray) {
+        
+        let keys = Object.keys(hexDecBase);
+
+        if(!keys.includes(value)) {
+            setOutputState("output--error",`Please enter valid Hexadecimal`);
+            return;
+        }
+    }
+
+    let decValue = 0;
+
+    for (let i = arrayLength - 1; i >=0; i--){
+        decValue += hexDecBase[hexArray[i]] * (16 ** Math.abs((arrayLength-1)-i))
+    }
+   
+    setOutputState("output--success",`Decimal Value: ${decValue}`)
+    
+}
+
+
 // function triggers the convert button
 function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
@@ -201,6 +252,9 @@ function handleConvert(){
     }
     else if (inputFrom == "Hex" && inputTo == "Bin"){
         HextoBin(inputValue);
+    }
+    else if (inputFrom == "Hex" && inputTo == "Dec" ){
+        HextoDec(inputValue);
     }
     
     else {
