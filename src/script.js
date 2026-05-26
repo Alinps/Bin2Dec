@@ -76,6 +76,14 @@ function BintoDec(input){
 function DectoBin(inputData) {
 
     let inputValue = Number(inputData);
+      if (isNaN(inputValue)){
+        setOutputState("output--error", "Enter a valid decimal number");
+        return;
+    }
+    if (inputValue < 0) {
+        setOutputState("output-error", "Negative number conversion is not available.")
+        return
+    }
     let quotient = inputValue;
     let reminder = 0;
     let BinaryNumber = [];
@@ -99,6 +107,11 @@ function DectoHex(inputData){
 
     if (isNaN(base16Value)){
         setOutputState("output--error", `Please enter a valid decimal number.`)
+        return
+    }
+
+    if (base16Value< 0) {
+        setOutputState("output-error", "Negative number conversion is not available.")
         return
     }
 
@@ -225,11 +238,38 @@ function HextoDec(inputData){
 }
 
 
+
+function DectoOct(inputData) {
+    let inputValue = Number(inputData);
+    if (isNaN(inputValue)){
+        setOutputState("output--error", "Enter a valid decimal number");
+        return;
+    }
+    if (inputValue < 0) {
+        setOutputState("output-error", "Negative number conversion is not available.")
+        return
+    }
+    let quotient = inputValue;
+    let reminder;
+    let octalValue = []
+
+    while (quotient > 0) {
+        reminder = quotient % 8 ;
+        quotient = Math.floor(quotient / 8);
+        octalValue.push(reminder);
+    }
+    octalValue = octalValue.reverse();
+    let result = octalValue.join("");
+    setOutputState("output--success",`Octal Value: ${result}`);
+    
+}
+
 // function triggers the convert button
 function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
     let inputFrom = fromBtn.value
     let inputTo = toBtn.value;
+
 
     if (inputValue === ""){
         setOutputState("output--error", "Input field is empty.");
@@ -255,6 +295,9 @@ function handleConvert(){
     }
     else if (inputFrom == "Hex" && inputTo == "Dec" ){
         HextoDec(inputValue);
+    }
+    else if (inputFrom == "Dec" && inputTo == "Oct"){
+        DectoOct(inputValue);
     }
     
     else {
