@@ -264,6 +264,52 @@ function DectoOct(inputData) {
     
 }
 
+// function to convert binary number to hexadecimal
+function BintoHex(inputData){
+    let inputBinValue = inputData;
+    if (inputBinValue.length > 16){
+        setOutputState("output--error","Enter upto 16 bit binary number")
+        return;
+    }
+    let binHex = {
+        "0000":0,
+        "0001":1,
+        "0010":2,
+        "0011":3,
+        "0100":4,
+        "0101":5,
+        "0110":6,
+        "0111":7,
+        "1000":8,
+        "1001":9,
+        "1010":"A",
+        "1011":"B",
+        "1100":"C",
+        "1101":"D",
+        "1110":"E",
+        "1111":"F"
+    
+    }
+    let result = [];
+    let hexValue = [];
+    for(let i=0; i<inputBinValue.length;i=i+4) {
+        result.push(inputBinValue.slice(i,i+4));
+   
+        }
+    for (let value of result){
+        if( !(value in binHex)){
+            setOutputState("output--error","Invalid Binary number");
+            return;
+        }
+        hexValue.push(binHex[value])
+    }
+    hexValue = "0x" + hexValue.join("");
+    setOutputState("output--success", `Hex Value: ${hexValue}`);    
+
+
+   }
+
+
 // function triggers the convert button
 function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
@@ -283,6 +329,9 @@ function handleConvert(){
 
     if (inputFrom == "Bin" && inputTo == "Dec"){
         BintoDec(inputValue);
+    }
+    else if(inputFrom == "Bin" && inputTo == "Hex"){
+        BintoHex(inputValue);
     }
     else if (inputFrom == "Dec" && inputTo == "Bin") {
         DectoBin(inputValue);
