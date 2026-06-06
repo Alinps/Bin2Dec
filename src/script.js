@@ -241,7 +241,7 @@ function HextoDec(inputData){
 }
 
 
-
+// convert decimal to octal number.
 function DectoOct(inputData) {
     let inputValue = Number(inputData);
     if (isNaN(inputValue)){
@@ -314,6 +314,24 @@ function BintoHex(inputData){
    }
 
 
+   function OctToDec(inputData){
+    let input = inputData;
+    let octDigit = [0,1,2,3,4,5,6,7];
+    let inputArray = input.split("").reverse();
+    let decValue = 0;
+    for (let i = inputArray.length -1 ; i >= 0; i--){
+        if (!(inputArray[i] in octDigit)){
+            setOutputState("output--error", "Please enter a valid Octal number")
+            return;
+        }
+        decValue += inputArray[i] * Math.pow(8,i)
+    }
+    setOutputState("output--success", `Decimal Value: ${decValue}`)
+}
+
+        
+ 
+
    // binary to octal
    function BintoOct(inputData){
     let input =  Number(inputData);
@@ -350,7 +368,6 @@ function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
     let inputFrom = fromBtn.value
     let inputTo = toBtn.value;
- 
 
     if (inputValue === ""){
         setOutputState("output--error", "Input field is empty.");
@@ -377,6 +394,9 @@ function handleConvert(){
     else if (inputFrom == "Dec" && inputTo == "Hex"){
         DectoHex(inputValue);
     }
+     else if (inputFrom == "Dec" && inputTo == "Oct"){
+        DectoOct(inputValue);
+    }
     else if (inputFrom == "Hex" && inputTo == "Bin"){
         HextoBin(inputValue);
     }
@@ -386,9 +406,10 @@ function handleConvert(){
     else if (inputFrom == "Hex" && inputTo == "Oct"){
         HextoOct(inputValue);
     }
-    else if (inputFrom == "Dec" && inputTo == "Oct"){
-        DectoOct(inputValue);
+    else if (inputFrom = "Oct" && inputTo == "Dec"){
+        OctToDec(inputValue);
     }
+ 
     
     else {
          setOutputState("output--error", `Please choose valid options to convert.`)
