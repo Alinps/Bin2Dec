@@ -68,6 +68,7 @@ function BintoDec(input){
         decimalNumber += digit * decRep[i + extraLength]
     }
     setOutputState("output--success", `Decimal value: ${decimalNumber}`)
+    return decimalNumber;
 
 }
 
@@ -96,6 +97,7 @@ function DectoBin(inputData) {
         
      let result =  BinaryNumber.reverse().join("");
      setOutputState("output--success", `Binary Value: ${result}`);  
+     return result;
 
     }
 
@@ -234,6 +236,7 @@ function HextoDec(inputData){
     }
    
     setOutputState("output--success",`Decimal Value: ${decValue}`)
+    return decValue;
     
 }
 
@@ -261,6 +264,7 @@ function DectoOct(inputData) {
     octalValue = octalValue.reverse();
     let result = octalValue.join("");
     setOutputState("output--success",`Octal Value: ${result}`);
+    return result;
     
 }
 
@@ -310,12 +314,43 @@ function BintoHex(inputData){
    }
 
 
+   // binary to octal
+   function BintoOct(inputData){
+    let input =  Number(inputData);
+    if (isNaN(input)){
+        setOutputState("output--error", "Enter a valid binary number");
+        return;
+    }
+    input = String(input)
+    if (input < 0) {
+        setOutputState("output-error", "Negative number conversion is not available.")
+        return
+    }
+    let decValue = BintoDec(input)
+    let OctValue = DectoOct(decValue)
+    setOutputState("output--success", `Oct Value: ${OctValue}`);    
+
+   }
+
+
+   function HextoOct(inputData){
+    let input = inputData;
+    if (input.length > 4){
+        setOutputState("output--error",`Enter upto 16 bit Hexadecimal Number`);
+        return
+    }
+    let DecValue = HextoDec(input);
+    let OctValue = DectoOct(DecValue);
+    setOutputState("output--success",`Octal Value: ${OctValue}`)
+   }
+
+
 // function triggers the convert button
 function handleConvert(){
     let inputValue =  document.getElementById("forminput").value.trim()
     let inputFrom = fromBtn.value
     let inputTo = toBtn.value;
-
+ 
 
     if (inputValue === ""){
         setOutputState("output--error", "Input field is empty.");
@@ -333,6 +368,9 @@ function handleConvert(){
     else if(inputFrom == "Bin" && inputTo == "Hex"){
         BintoHex(inputValue);
     }
+    else if(inputFrom == "Bin" && inputTo == "Oct"){
+        BintoOct(inputValue);
+    }
     else if (inputFrom == "Dec" && inputTo == "Bin") {
         DectoBin(inputValue);
     }
@@ -344,6 +382,9 @@ function handleConvert(){
     }
     else if (inputFrom == "Hex" && inputTo == "Dec" ){
         HextoDec(inputValue);
+    }
+    else if (inputFrom == "Hex" && inputTo == "Oct"){
+        HextoOct(inputValue);
     }
     else if (inputFrom == "Dec" && inputTo == "Oct"){
         DectoOct(inputValue);
